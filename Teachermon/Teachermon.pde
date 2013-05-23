@@ -5,25 +5,42 @@ PImage player;
 
 PFont Pokemonfont;
 
-boolean titlescreen=false;
-boolean overworld1=true;
+AudioSample bump;
+AudioSample blip;
+
+boolean titlescreen=true;
+boolean overworld1=false;
+
+AudioPlayer seen;
+AudioPlayer battle;
 
 void setup() {
 
   //**********BASIC SETUP************
+
   size(700, 400);
   student = new Player();
+  
   battletext = loadImage("battlescreen.png");
   seeplayer = loadImage("exclamationpoint.png");
   player = loadImage("trainerbacksprite.png");
+  
   Pokemonfont = loadFont ("Power_Green-48.vlw");
   textFont(Pokemonfont);
+  
+  minim = new Minim(this);
+  
+  bump = minim.loadSample("bump.mp3", 512);
+  blip = minim.loadSample("blip.mp3", 512);
+  
+  seen = minim.loadFile("rocket.mp3");
+  battle = minim.loadFile("battlemusic.mp3");
+  
 
   //*************TITLESCREEN SETUP************
 
   theMov = new Movie(this, "Teachermon_Intro.mov");
 
-  minim = new Minim(this);
   titlescreenplayer = minim.loadFile("PokemonTheme.mp3");
 
   theMov.play();
@@ -31,6 +48,8 @@ void setup() {
   clickhere=false;
 
   //************OVERWORLD 1 SETUP***************
+  overworld1bgm = minim.loadFile("cave.mp3");
+  
   ground = loadImage("floor.png");
   walll = loadImage("wallleft.png");
   wallr = loadImage("wallright.png");
@@ -40,7 +59,7 @@ void setup() {
   walltopright = loadImage("cornertopright.png");
   battlebackground1top = loadImage("cavebattlebackgroundtop.png");
   battlebackground1bottom = loadImage("cavebattlebackgroundbottom.png");
-  
+
   for (int i=0; i<trainerfight1.length; i++) {
     trainerfight1[i]=false;
   }
@@ -52,10 +71,10 @@ void setup() {
   for (int i=0; i<trainer1.length; i++) {
     trainer1[i] = new overworld1trainer(i);
   }
-  for (int i=0; i<trainer1sprite.length; i++){
+  for (int i=0; i<trainer1sprite.length; i++) {
     trainer1sprite[i] = loadImage("trainer1sprite"+(i+1)+".png");
   }
-  
+
   fightmessage1[0] = ". . .";
   fightmessage1[1] = "Do you want to be on the Wall of Fame?";
   fightmessage1[2] = "You'll be dazzled by my glorious biceps!";
@@ -71,8 +90,8 @@ void draw() {
   if (overworld1) {
     overworld1();
   }
-  for(int i=0; i<trainer1.length; i++){
-    if(trainer1[i].battlestart==true){
+  for (int i=0; i<trainer1.length; i++) {
+    if (trainer1[i].battlestart==true) {
       battle1(i);
     }
   }

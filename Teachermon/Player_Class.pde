@@ -12,7 +12,7 @@ class Player {
   PImage standd;
   PImage standu;
   
-  float x=width/4+25;
+  float x=width/2+25;
   float y=height/2;
   
   //Moving directions
@@ -33,6 +33,8 @@ class Player {
   
   //Moving will stop at each grid position
   int movetimer=0;
+  
+  boolean whatattack=false;
   
   Player(){
     movel1 = loadImage("trainermove1left.png");
@@ -110,6 +112,9 @@ class Player {
       if (x!=width-50 && (x!=trainer1[0].x-25 || y!=trainer1[0].y) && (x!=trainer1[1].x-25 || y!=trainer1[1].y) && (x!=trainer1[2].x-25 || y!=trainer1[2].y)){
         x++;
       }
+      else if(movetimer==1){
+        bump.trigger();
+      }
       if (movetimer==25) {
         mover=false;
         moving=false;
@@ -138,6 +143,9 @@ class Player {
       movetimer++;
       if(x!=25 && (x!=trainer1[0].x+25 || y!=trainer1[0].y) && (x!=trainer1[1].x+25 || y!=trainer1[1].y) && (x!=trainer1[2].x+25 || y!=trainer1[2].y)){
         x--;
+      }
+      else if(movetimer==1){
+        bump.trigger();
       }
       if (movetimer==25) {
         movel=false;
@@ -168,6 +176,9 @@ class Player {
       if(y!=25 && (x!=trainer1[0].x || y!=trainer1[0].y+25) && (x!=trainer1[1].x || y!=trainer1[1].y+25) && (x!=trainer1[2].x || y!=trainer1[2].y+25)){
         y--;
       }
+      else if(movetimer==1){
+        bump.trigger();
+      }
       if (movetimer==25) {
         moveu=false;
         moving=false;
@@ -196,6 +207,9 @@ class Player {
       movetimer++;
       if(y!=height-50 && (x!=trainer1[0].x || y!=trainer1[0].y-25) && (x!=trainer1[1].x || y!=trainer1[1].y-25) && (x!=trainer1[2].x || y!=trainer1[2].y-25)){
         y++;
+      }
+      else if(movetimer==1){
+        bump.trigger();
       }
       if (movetimer==25) {
         moved=false;

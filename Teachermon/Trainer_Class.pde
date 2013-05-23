@@ -4,13 +4,18 @@ class overworld1trainer {
   boolean fighting=false;
   boolean finishedtalking=false;
   boolean premoving=false;
+  
   int exclamationtimer=0;
+  
   boolean moving=false;
   boolean battlestart=false;
+  
   int x;
   float y=25;
   int i;
   float foot=0;
+  
+  boolean inbattletalking=false;
 
   overworld1trainer(int _i) {
     i=_i;
@@ -31,6 +36,11 @@ class overworld1trainer {
         image(seeplayer, x, y-25, 25, 25);
         premoving=true;
         exclamationtimer++;
+      }
+      if(exclamationtimer==1){
+        overworld1bgm.close();
+        overworld1bgm = minim.loadFile("cave.mp3");
+        seen.play();
       }
       if (exclamationtimer>=45) {
         premoving=false;
@@ -60,6 +70,8 @@ class overworld1trainer {
         finishedtalking=true;
         battlestart=true;
         overworld1=false;
+        seen.close();
+        seen = minim.loadFile("rocket.mp3");
       }
     }
   }

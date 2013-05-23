@@ -23,7 +23,15 @@ int overworldopacity=255;
 String[] fightmessage1 = new String[3];
 String[] teachermonnames1 = new String[3];
 
+AudioPlayer overworld1bgm;
+
+boolean bgm1=false;
+
 void overworld1() {
+  if(bgm1==false){
+    bgm1=true;
+    overworld1bgm.play();
+  }
   fill(255, 0, 0);
   //*******WALLS********
   for (int i=1; i<width/25-1; i++) {

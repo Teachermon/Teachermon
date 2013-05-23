@@ -42,12 +42,8 @@ void titlescreen() {
     //}
     if (titleopacity>=255&&titlescreenplayer.isPlaying()&&clickhere) {
       titleopacity=255;
-      //Not sure which one to use;both do the same, but former keeps on loading the music file.
-      //Could present a problem later.
-      //player.close();
-      //player = minim.loadFile("music.mp3");
+      titlescreenplayer.close();
       clickhere=false;
-      minim.stop();
       titlescreen=false;
       overworld1=true;
     }
