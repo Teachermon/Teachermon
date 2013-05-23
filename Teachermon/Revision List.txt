@@ -1,0 +1,7 @@
+Put revisions here with date on them so we can keep track of stuff and have an easier time with the written stuff.
+5/21/13
+                                     Created PFont code to change regular font to Pokemon font.
+5/22/13
+		Added sprites for overworld 1 teachers. Added background intro for battle in the cave.
+5/22/13
+		Created AudioSample code for wall bump noise and other misc. noises.
