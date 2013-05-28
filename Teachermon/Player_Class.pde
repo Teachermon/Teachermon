@@ -1,4 +1,6 @@
 class Player {
+
+  //Movement images
   PImage movel1;
   PImage mover1;
   PImage moved1;
@@ -11,32 +13,56 @@ class Player {
   PImage standr;
   PImage standd;
   PImage standu;
-  
+
+  //Character position
   float x=width/2+25;
   float y=height/2;
-  
+
   //Moving directions
   boolean moving=false;
+  boolean cantmove=false;
   boolean movel=false;
   boolean mover=false;
   boolean moveu=false;
   boolean moved=false;
-  
+
   //Facing directions
   boolean facel=false;
   boolean facer=true;
   boolean faceu=false;
   boolean faced=false;
-  
+
   //Which movnig animation will play
   int foot=1;
-  
+
   //Moving will stop at each grid position
   int movetimer=0;
+
+  //What move
+  boolean whatmove=false;
+
+  //In-battle values
+  int level=20;
+  int totalhealth=100;
+  float health=100;
+  int healthchange;
+  float losthealth;
+  int baseattack=50;
+  int attack;
+  int attackmod=1;
+  int basedefense;
+  int defense;
+  int defensemod;
+  int basespeed=100;
+  int speed=100;
+  int speedmod=0;
   
-  boolean whatattack=false;
-  
-  Player(){
+  float movecounter;
+  boolean usemove=false;
+  boolean losinghealth=false;
+  boolean defeated=false;
+
+  Player() {
     movel1 = loadImage("trainermove1left.png");
     mover1 = loadImage("trainermove1right.png");
     moveu1 = loadImage("trainermove1up.png");
@@ -53,51 +79,51 @@ class Player {
 
   void display() {
     fill(255);
-    
+
     //***********SPRITES**************
-    if(movel && foot==1){
-      image(movel1,x,y,25,25);
+    if (movel && foot==1) {
+      image(movel1, x, y, 25, 25);
     }
-    if(movel && foot==2){
-      image(movel2,x,y,25,25);
+    if (movel && foot==2) {
+      image(movel2, x, y, 25, 25);
     }
-    if(facel){
-      image(standl,x,y,25,25);
+    if (facel) {
+      image(standl, x, y, 25, 25);
     }
-    
-    if(mover && foot==1){
-      image(mover1,x,y,25,25);
+
+    if (mover && foot==1) {
+      image(mover1, x, y, 25, 25);
     }
-    if(mover && foot==2){
-      image(mover2,x,y,25,25);
+    if (mover && foot==2) {
+      image(mover2, x, y, 25, 25);
     }
-    if(facer){
-      image(standr,x,y,25,25);
+    if (facer) {
+      image(standr, x, y, 25, 25);
     }
-    
-    if(moveu && foot==1){
-      image(moveu1,x,y,25,25);
+
+    if (moveu && foot==1) {
+      image(moveu1, x, y, 25, 25);
     }
-    if(moveu && foot==2){
-      image(moveu2,x,y,25,25);
+    if (moveu && foot==2) {
+      image(moveu2, x, y, 25, 25);
     }
-    if(faceu){
-      image(standu,x,y,25,25);
+    if (faceu) {
+      image(standu, x, y, 25, 25);
     }
-    
-    if(moved && foot==1){
-      image(moved1,x,y,25,25);
+
+    if (moved && foot==1) {
+      image(moved1, x, y, 25, 25);
     }
-    if(moved && foot==2){
-      image(moved2,x,y,25,25);
+    if (moved && foot==2) {
+      image(moved2, x, y, 25, 25);
     }
-    if(faced){
-      image(standd,x,y,25,25);
+    if (faced) {
+      image(standd, x, y, 25, 25);
     }
   }
-  
-  void move1(){
-    
+
+  void move(int a) {
+
     //***********MOVING****************
     if (keyPressed && key=='d' && moving==false) {
       mover=true;
@@ -109,10 +135,14 @@ class Player {
     }
     if (mover==true) {
       movetimer++;
-      if (x!=width-50 && (x!=trainer1[0].x-25 || y!=trainer1[0].y) && (x!=trainer1[1].x-25 || y!=trainer1[1].y) && (x!=trainer1[2].x-25 || y!=trainer1[2].y)){
-        x++;
+      for (int i=0; i<3; i++) {
+        if (x==trainer[a][i].x-25 && y==trainer[a][i].y) {
+          cantmove=true;
+        }
       }
-      else if(movetimer==1){
+      if (x!=width-50 && cantmove==false) {
+        x++;
+      } else if (movetimer==1) {
         bump.trigger();
       }
       if (movetimer==25) {
@@ -123,10 +153,10 @@ class Player {
         facel=false;
         faced=false;
         faceu=false;
+        cantmove=false;
         if (foot==1) {
           foot=2;
-        }
-        else {
+        } else {
           foot=1;
         }
       }
@@ -141,10 +171,14 @@ class Player {
     }
     if (movel==true) {
       movetimer++;
-      if(x!=25 && (x!=trainer1[0].x+25 || y!=trainer1[0].y) && (x!=trainer1[1].x+25 || y!=trainer1[1].y) && (x!=trainer1[2].x+25 || y!=trainer1[2].y)){
-        x--;
+      for (int i=0; i<3; i++) {
+        if (x==trainer[a][i].x+25 && y==trainer[a][i].y) {
+          cantmove=true;
+        }
       }
-      else if(movetimer==1){
+      if (x!=25 && cantmove==false) {
+        x--;
+      } else if (movetimer==1) {
         bump.trigger();
       }
       if (movetimer==25) {
@@ -155,10 +189,10 @@ class Player {
         facel=true;
         faced=false;
         faceu=false;
+        cantmove=false;
         if (foot==1) {
           foot=2;
-        }
-        else {
+        } else {
           foot=1;
         }
       }
@@ -173,10 +207,14 @@ class Player {
     }
     if (moveu==true) {
       movetimer++;
-      if(y!=25 && (x!=trainer1[0].x || y!=trainer1[0].y+25) && (x!=trainer1[1].x || y!=trainer1[1].y+25) && (x!=trainer1[2].x || y!=trainer1[2].y+25)){
-        y--;
+      for (int i=0; i<3; i++) {
+        if (x==trainer[a][i].x && y==trainer[a][i].y+25) {
+          cantmove=true;
+        }
       }
-      else if(movetimer==1){
+      if (y!=25 && cantmove==false) {
+        y--;
+      } else if (movetimer==1) {
         bump.trigger();
       }
       if (movetimer==25) {
@@ -187,10 +225,10 @@ class Player {
         facel=false;
         faced=false;
         faceu=true;
+        cantmove=false;
         if (foot==1) {
           foot=2;
-        }
-        else {
+        } else {
           foot=1;
         }
       }
@@ -205,10 +243,14 @@ class Player {
     }
     if (moved==true) {
       movetimer++;
-      if(y!=height-50 && (x!=trainer1[0].x || y!=trainer1[0].y-25) && (x!=trainer1[1].x || y!=trainer1[1].y-25) && (x!=trainer1[2].x || y!=trainer1[2].y-25)){
-        y++;
+      for (int i=0; i<3; i++) {
+        if (x==trainer[a][i].x && y==trainer[a][i].y-25) {
+          cantmove=true;
+        }
       }
-      else if(movetimer==1){
+      if (y!=height-50 && cantmove==false) {
+        y++;
+      } else if (movetimer==1) {
         bump.trigger();
       }
       if (movetimer==25) {
@@ -219,13 +261,14 @@ class Player {
         facel=false;
         faced=true;
         faceu=false;
+        cantmove=false;
         if (foot==1) {
           foot=2;
-        }
-        else {
+        } else {
           foot=1;
         }
       }
     }
   }
 }
+

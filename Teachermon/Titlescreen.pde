@@ -25,7 +25,7 @@ void titlescreen() {
       line( x1, height-50 + titlescreenplayer.right.get(i)*50, x2, height-50 + titlescreenplayer.right.get(i+1)*50 );
     }
     //  Use either the mousePressed function or void mousePressed() function, depending on need.
-    if ((mousePressed)&&(mouseY>3*height/8)&&(mouseY<5*height/8)&&(millis()>=12000)) {
+    if (keyPressed && (key == ENTER || key == RETURN)) {
       clickhere=true;
     }
     if (clickhere) {
@@ -45,7 +45,7 @@ void titlescreen() {
       titlescreenplayer.close();
       clickhere=false;
       titlescreen=false;
-      overworld1=true;
+      overworld[0]=true;
     }
   }
 }

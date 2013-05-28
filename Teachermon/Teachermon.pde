@@ -2,17 +2,38 @@ Player student;
 PImage battletext;
 PImage seeplayer;
 PImage player;
+PImage playerhealth;
+PImage enemyhealth;
+PImage battlearrow;
+PImage moveprompt;
 
 PFont Pokemonfont;
 
 AudioSample bump;
 AudioSample blip;
+AudioSample hurt;
 
 boolean titlescreen=true;
-boolean overworld1=false;
+boolean[] overworld = new boolean[4];
 
 AudioPlayer seen;
 AudioPlayer battle;
+
+int buttontimer=0;
+boolean button=true;
+int movechoicetimer=0;
+boolean movechoice=true;
+
+Moves[] move = new Moves[52];
+
+Enemy[][] pokemon = new Enemy[4][3];
+
+//Student moves
+int[] studentmoveref = new int[4];
+
+//Teacher moves
+//pokemonmoves[overworld#][teachermon#][move#]
+int[][][] pokemonmoveref = new int[4][3][4];
 
 void setup() {
 
@@ -20,22 +41,34 @@ void setup() {
 
   size(700, 400);
   student = new Player();
-  
+
   battletext = loadImage("battlescreen.png");
   seeplayer = loadImage("exclamationpoint.png");
   player = loadImage("trainerbacksprite.png");
-  
+  battlearrow = loadImage("battlearrow.png");
+  moveprompt = loadImage("moveprompt.png");
+
   Pokemonfont = loadFont ("Power_Green-48.vlw");
   textFont(Pokemonfont);
-  
+
   minim = new Minim(this);
-  
+
   bump = minim.loadSample("bump.mp3", 512);
   blip = minim.loadSample("blip.mp3", 512);
-  
+  hurt = minim.loadSample("hitsound.mp3", 512);
+
   seen = minim.loadFile("rocket.mp3");
   battle = minim.loadFile("battlemusic.mp3");
-  
+
+  playerhealth = loadImage("GPAhealth2.png");
+  enemyhealth = loadImage("enemyhealth.png");
+
+  movesetup();
+  playermovesetup();
+
+  for (int i=0; i<4; i++) {
+    overworld[i]=false;
+  }
 
   //*************TITLESCREEN SETUP************
 
@@ -47,53 +80,102 @@ void setup() {
 
   clickhere=false;
 
-  //************OVERWORLD 1 SETUP***************
-  overworld1bgm = minim.loadFile("cave.mp3");
-  
-  ground = loadImage("floor.png");
-  walll = loadImage("wallleft.png");
-  wallr = loadImage("wallright.png");
-  wallu = loadImage("walltop.png");
-  walld = loadImage("wallbottom.png");
-  walltopleft = loadImage("cornertopleft.png");
-  walltopright = loadImage("cornertopright.png");
-  battlebackground1top = loadImage("cavebattlebackgroundtop.png");
-  battlebackground1bottom = loadImage("cavebattlebackgroundbottom.png");
+  //************OVERWORLD SETUP***************
+  overworldbgm[0] = minim.loadFile("cave.mp3");
 
-  for (int i=0; i<trainerfight1.length; i++) {
-    trainerfight1[i]=false;
-  }
-  for (int i=0; i<overworld1trainer.length; i++) {
-    overworld1trainer[i] = loadImage("overworld1trainer"+(i+1)+".png");
-    overworld1trainerfoot1[i] = loadImage("overworld1trainer"+(i+1)+"down1.png");
-    overworld1trainerfoot2[i] = loadImage("overworld1trainer"+(i+1)+"down2.png");
-  }
-  for (int i=0; i<trainer1.length; i++) {
-    trainer1[i] = new overworld1trainer(i);
-  }
-  for (int i=0; i<trainer1sprite.length; i++) {
-    trainer1sprite[i] = loadImage("trainer1sprite"+(i+1)+".png");
+  for (int i=0; i<4; i++) {
+    ground[i] = loadImage("floor"+i+".png");
+    walll[i] = loadImage("wallleft"+i+".png");
+    wallr[i] = loadImage("wallright"+i+".png");
+    wallu[i] = loadImage("walltop"+i+".png");
+    walld[i] = loadImage("wallbottom"+i+".png");
+    walltopleft[i] = loadImage("cornertopleft"+i+".png");
+    walltopright[i] = loadImage("cornertopright"+i+".png");
+    battlebackgroundtop[i] = loadImage("battlebackgroundtop"+i+".png");
+    battlebackgroundbottom[i] = loadImage("battlebackgroundbottom"+i+".png");
   }
 
-  fightmessage1[0] = ". . .";
-  fightmessage1[1] = "Do you want to be on the Wall of Fame?";
-  fightmessage1[2] = "You'll be dazzled by my glorious biceps!";
-  teachermonnames1[0] = "Mr. Moskowitz";
-  teachermonnames1[1] = "Mr. Smolenski";
-  teachermonnames1[2] = "Mrs. Lord";
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      trainerfight[i][j]=false;
+    }
+  }
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      overworldtrainer[i][j] = loadImage("overworldtrainer"+i+""+j+".png");
+      overworldtrainerfoot1[i][j] = loadImage("overworldtrainer"+i+""+j+"down1.png");
+      overworldtrainerfoot2[i][j] = loadImage("overworldtrainer"+i+""+j+"down2.png");
+    }
+  }
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      trainer[i][j] = new overworldtrainer(i, j);
+    }
+  }
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      trainersprite[i][j] = loadImage("trainersprite"+i+""+j+".png");
+    }
+  }
+
+  fightmessage[0][0] = ". . .";
+  fightmessage[0][1] = "Do you want to be on the Wall of Fame?";
+  fightmessage[0][2] = "You'll be dazzled by my glorious biceps!";
+  teachermonnames[0][0] = "Mr. Moskowitz";
+  teachermonnames[0][1] = "Mr. Smolenski";
+  teachermonnames[0][2] = "Mrs. Lord";
+
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      pokemon[i][j] = new Enemy();
+    }
+  }
+  pokemonsetup();
 }
 
 void draw() {
   if (titlescreen) {
     titlescreen();
   }
-  if (overworld1) {
-    overworld1();
-  }
-  for (int i=0; i<trainer1.length; i++) {
-    if (trainer1[i].battlestart==true) {
-      battle1(i);
+  for (int s=0; s<4; s++) {
+    if (overworld[s]) {
+      overworld(s);
     }
+  }
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      if (trainer[i][j].battlestart==true) {
+        battle(i, j);
+        movechoicetimer();
+      }
+    }
+  }
+  buttontimer();
+}
+
+void buttontimer() {
+  if (keyPressed && (key == ENTER || key == RETURN)) {
+    button=false;
+  }
+  if (button==false) {
+    buttontimer++;
+  }
+  if (buttontimer==120) {
+    button=true;
+    buttontimer=0;
+  }
+}
+
+void movechoicetimer() {
+  if (keyPressed && (key == 'w' || key == 'a' || key == 's' || key == 'd')) {
+    movechoice=false;
+  }
+  if (movechoice==false) {
+    movechoicetimer++;
+  }
+  if (movechoicetimer==10) {
+    movechoice=true;
+    movechoicetimer=0;
   }
 }
 

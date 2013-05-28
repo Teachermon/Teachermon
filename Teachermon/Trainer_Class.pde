@@ -1,4 +1,4 @@
-class overworld1trainer {
+class overworldtrainer {
   boolean fought=false;
   boolean spotted=false;
   boolean fighting=false;
@@ -13,20 +13,22 @@ class overworld1trainer {
   int x;
   float y=25;
   int i;
+  int j;
   float foot=0;
   
   boolean inbattletalking=false;
-
-  overworld1trainer(int _i) {
+  
+  overworldtrainer(int _i, int _j){
     i=_i;
-    x=(i+1)*width/4;
+    j=_j;
+    x=(j+1)*width/4;
   }
 
   void move() {
     noStroke();
     fill(0);
     if (moving==false) {
-      image(overworld1trainer[i], x, y, 25, 25);
+      image(overworldtrainer[i][j], x, y, 25, 25);
     }
     if (x==student.x && fought==false) {
       spotted=true;
@@ -38,8 +40,8 @@ class overworld1trainer {
         exclamationtimer++;
       }
       if(exclamationtimer==1){
-        overworld1bgm.close();
-        overworld1bgm = minim.loadFile("cave.mp3");
+        overworldbgm[i].close();
+        overworldbgm[i] = minim.loadFile("cave.mp3");
         seen.play();
       }
       if (exclamationtimer>=45) {
@@ -53,10 +55,10 @@ class overworld1trainer {
           foot=0;
         }
         if (foot<25) {
-          image(overworld1trainerfoot1[i], x, y, 25, 25);
+          image(overworldtrainerfoot1[i][j], x, y, 25, 25);
         }
         if (25<=foot && foot <50) {
-          image(overworld1trainerfoot2[i], x, y, 25, 25);
+          image(overworldtrainerfoot2[i][j], x, y, 25, 25);
         }
       }
       if (y==student.y-25) {
@@ -64,16 +66,19 @@ class overworld1trainer {
         image(battletext, 0, 3*height/4, width, height/4);
         fill(255);
         textSize(30);
-        text(fightmessage1[i], width/16, 13*height/16, 15*width/16, 3*height/16);
+        text(fightmessage[i][j], width/16, 13*height/16, 15*width/16, 3*height/16);
       }
-      if (y==student.y-25 && (keyCode == ENTER || keyCode == RETURN)) {
+      if (y==student.y-25 && keyPressed && button && (key == ENTER || key == RETURN)) {
         finishedtalking=true;
         battlestart=true;
-        overworld1=false;
+        overworld[i]=false;
         seen.close();
         seen = minim.loadFile("rocket.mp3");
+        bgm[i]=false;
       }
     }
   }
 }
 
+  
+  
