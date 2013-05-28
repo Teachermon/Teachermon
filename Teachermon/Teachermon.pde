@@ -18,6 +18,7 @@ boolean[] overworld = new boolean[4];
 
 AudioPlayer seen;
 AudioPlayer battle;
+AudioPlayer victory;
 
 int buttontimer=0;
 boolean button=true;
@@ -27,6 +28,7 @@ boolean movechoice=true;
 Moves[] move = new Moves[52];
 
 Enemy[][] pokemon = new Enemy[4][3];
+String[][] defeatmessage = new String[4][3];
 
 //Student moves
 int[] studentmoveref = new int[4];
@@ -59,6 +61,7 @@ void setup() {
 
   seen = minim.loadFile("rocket.mp3");
   battle = minim.loadFile("battlemusic.mp3");
+  victory = minim.loadFile("victory.mp3");
 
   playerhealth = loadImage("GPAhealth2.png");
   enemyhealth = loadImage("enemyhealth.png");
@@ -120,10 +123,13 @@ void setup() {
 
   fightmessage[0][0] = ". . .";
   fightmessage[0][1] = "Do you want to be on the Wall of Fame?";
-  fightmessage[0][2] = "You'll be dazzled by my glorious biceps!";
+  fightmessage[0][2] = "Enzymes are the answer to everything!";
   teachermonnames[0][0] = "Mr. Moskowitz";
   teachermonnames[0][1] = "Mr. Smolenski";
   teachermonnames[0][2] = "Mrs. Lord";
+  defeatmessage[0][0] = ". . .!";
+  defeatmessage[0][1] = "Just like Rome, I fall!";
+  defeatmessage[0][2] = "Next time, I will use college level matching!";
 
   for (int i=0; i<4; i++) {
     for (int j=0; j<3; j++) {

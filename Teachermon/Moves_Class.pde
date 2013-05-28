@@ -40,7 +40,7 @@ class Moves {
 
 void movesetup() {
   for (int i=0; i<move.length; i++) {
-    move[i]=new Moves(50*i, "move"+i, 0, 0, 0, 0, 0, 0, false);
+    move[i]=new Moves(500*i, "move"+i, 0, 0, 0, 0, 0, 0, false);
   }
 }
 
