@@ -15,7 +15,7 @@ class Player {
   PImage standu;
 
   //Character position
-  float x=width/2+25;
+  float x=25;
   float y=height/2;
 
   //Moving directions
@@ -50,9 +50,9 @@ class Player {
   int baseattack=50;
   int attack;
   int attackmod=1;
-  int basedefense;
+  int basedefense=200;
   int defense;
-  int defensemod;
+  int defensemod=0;
   int basespeed=100;
   int speed=100;
   int speedmod=0;
@@ -136,9 +136,12 @@ class Player {
     if (mover==true) {
       movetimer++;
       for (int i=0; i<3; i++) {
-        if (x==trainer[a][i].x-25 && y==trainer[a][i].y) {
+        if ((x==trainer[a][i].x-25 && y==trainer[a][i].y) || x!=width-50) {
           cantmove=true;
         }
+      }
+      if(x==width-50 && y==height/2 && pokemon[a][0].defeated && pokemon[a][1].defeated && pokemon[a][2].defeated){
+        cantmove=false;
       }
       if (x!=width-50 && cantmove==false) {
         x++;

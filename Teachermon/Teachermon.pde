@@ -12,6 +12,9 @@ PFont Pokemonfont;
 AudioSample bump;
 AudioSample blip;
 AudioSample hurt;
+AudioSample heal;
+AudioSample exitappear;
+AudioSample exitsound;
 
 boolean titlescreen=true;
 boolean[] overworld = new boolean[4];
@@ -58,6 +61,9 @@ void setup() {
   bump = minim.loadSample("bump.mp3", 512);
   blip = minim.loadSample("blip.mp3", 512);
   hurt = minim.loadSample("hitsound.mp3", 512);
+  heal = minim.loadSample("potion.mp3", 512);
+  exitappear = minim.loadSample("exitappear.mp3", 512);
+  exitsound = minim.loadSample("exit.mp3", 512);
 
   seen = minim.loadFile("rocket.mp3");
   battle = minim.loadFile("battlemusic.mp3");
@@ -84,7 +90,9 @@ void setup() {
   clickhere=false;
 
   //************OVERWORLD SETUP***************
-  overworldbgm[0] = minim.loadFile("cave.mp3");
+  for (int i=0; i<1; i++) {
+    overworldbgm[i] = minim.loadFile("overworldbgm"+i+".mp3");
+  }
 
   for (int i=0; i<4; i++) {
     ground[i] = loadImage("floor"+i+".png");
@@ -96,6 +104,8 @@ void setup() {
     walltopright[i] = loadImage("cornertopright"+i+".png");
     battlebackgroundtop[i] = loadImage("battlebackgroundtop"+i+".png");
     battlebackgroundbottom[i] = loadImage("battlebackgroundbottom"+i+".png");
+    exit[i] = loadImage("exit"+i+".png");
+    newexit[i] = false;
   }
 
   for (int i=0; i<4; i++) {
@@ -166,7 +176,7 @@ void buttontimer() {
   if (button==false) {
     buttontimer++;
   }
-  if (buttontimer==120) {
+  if (buttontimer==30) {
     button=true;
     buttontimer=0;
   }

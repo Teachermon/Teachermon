@@ -28,11 +28,13 @@ void pokemonsetup() {
     for (int j=0; j<3; j++) {
       pokemon[i][j].totalhealth=100;
       pokemon[i][j].health=100;
+      pokemon[i][j].baseattack=5;
+      pokemon[i][j].attackmod=0;
       pokemon[i][j].basespeed=10;
       pokemon[i][j].speedmod=0;
       pokemon[i][j].basedefense=50;
-      pokemon[i][j].level=1;
       pokemon[i][j].defensemod=0;
+      pokemon[i][j].level=100;
     }
   }
 }

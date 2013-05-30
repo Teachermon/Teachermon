@@ -14,5 +14,9 @@ Put revisions here with date on them so we can keep track of stuff and have an e
 
 5/26/13		Completely redid the code, a lot nicer and more organized with more arrays, less copy paste
 
-5/27/13		Added battle sequence, health loss, stat change, and heath regen for students.
+5/27/13		Added battle sequence, health loss, stat change, and health regen for students.
 		lol 1112 lines of code
+
+5/28/13		Added battle sequence, health loss, stat change, and health regen for teachers.
+		All enemies in overworld[0] are now fightable
+		Made Credits

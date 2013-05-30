@@ -2,7 +2,6 @@ class overworldtrainer {
   boolean fought=false;
   boolean spotted=false;
   boolean fighting=false;
-  boolean finishedtalking=false;
   boolean premoving=false;
   
   int exclamationtimer=0;
@@ -41,7 +40,7 @@ class overworldtrainer {
       }
       if(exclamationtimer==1){
         overworldbgm[i].close();
-        overworldbgm[i] = minim.loadFile("cave.mp3");
+        overworldbgm[i] = minim.loadFile("overworldbgm"+i+".mp3");
         seen.play();
       }
       if (exclamationtimer>=45) {
@@ -61,15 +60,15 @@ class overworldtrainer {
           image(overworldtrainerfoot2[i][j], x, y, 25, 25);
         }
       }
-      if (y==student.y-25) {
+      if (y==student.y-25 && exclamationtimer>=45) {
         moving=false;
         image(battletext, 0, 3*height/4, width, height/4);
         fill(255);
         textSize(30);
         text(fightmessage[i][j], width/16, 13*height/16, 15*width/16, 3*height/16);
       }
-      if (y==student.y-25 && keyPressed && button && (key == ENTER || key == RETURN)) {
-        finishedtalking=true;
+      if (y==student.y-25 && keyPressed && button && (key == ENTER || key == RETURN) && exclamationtimer>=45) {
+        exclamationtimer=0;
         battlestart=true;
         overworld[i]=false;
         seen.close();
