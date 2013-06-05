@@ -29,7 +29,7 @@ class overworldtrainer {
     if (moving==false) {
       image(overworldtrainer[i][j], x, y, 25, 25);
     }
-    if (x==student.x && fought==false) {
+    if (x==student.x && fought==false && y<=student.y) {
       spotted=true;
     }
     if (spotted==true) {

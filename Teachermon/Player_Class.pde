@@ -136,14 +136,11 @@ class Player {
     if (mover==true) {
       movetimer++;
       for (int i=0; i<3; i++) {
-        if ((x==trainer[a][i].x-25 && y==trainer[a][i].y) || x!=width-50) {
+        if ((x==trainer[a][i].x-25 && y==trainer[a][i].y) || (x==width-50)) {
           cantmove=true;
         }
       }
-      if(x==width-50 && y==height/2 && pokemon[a][0].defeated && pokemon[a][1].defeated && pokemon[a][2].defeated){
-        cantmove=false;
-      }
-      if (x!=width-50 && cantmove==false) {
+      if (cantmove==false) {
         x++;
       } else if (movetimer==1) {
         bump.trigger();
@@ -211,11 +208,14 @@ class Player {
     if (moveu==true) {
       movetimer++;
       for (int i=0; i<3; i++) {
-        if (x==trainer[a][i].x && y==trainer[a][i].y+25) {
+        if ((x==trainer[a][i].x && y==trainer[a][i].y+25) || y==25) {
           cantmove=true;
         }
       }
-      if (y!=25 && cantmove==false) {
+      if(a!=0 && x==25 && y==25){
+        cantmove=false;
+      }
+      if (cantmove==false) {
         y--;
       } else if (movetimer==1) {
         bump.trigger();
@@ -247,11 +247,14 @@ class Player {
     if (moved==true) {
       movetimer++;
       for (int i=0; i<3; i++) {
-        if (x==trainer[a][i].x && y==trainer[a][i].y-25) {
+        if ((x==trainer[a][i].x && y==trainer[a][i].y-25) || y==height-50) {
           cantmove=true;
         }
       }
-      if (y!=height-50 && cantmove==false) {
+      if(x==width-75 && y==height-50 && newexit[a]==true){
+        cantmove=false;
+      }
+      if (cantmove==false) {
         y++;
       } else if (movetimer==1) {
         bump.trigger();

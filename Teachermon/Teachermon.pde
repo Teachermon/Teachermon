@@ -42,6 +42,10 @@ int[][][] pokemonmoveref = new int[4][3][4];
 
 void setup() {
 
+  for (int i=0; i<4; i++) {
+    overworld[i]=false;
+  }
+
   //**********BASIC SETUP************
 
   size(700, 400);
@@ -69,15 +73,11 @@ void setup() {
   battle = minim.loadFile("battlemusic.mp3");
   victory = minim.loadFile("victory.mp3");
 
-  playerhealth = loadImage("GPAhealth2.png");
+  playerhealth = loadImage("GPAhealth.png");
   enemyhealth = loadImage("enemyhealth.png");
 
   movesetup();
   playermovesetup();
-
-  for (int i=0; i<4; i++) {
-    overworld[i]=false;
-  }
 
   //*************TITLESCREEN SETUP************
 
@@ -90,7 +90,7 @@ void setup() {
   clickhere=false;
 
   //************OVERWORLD SETUP***************
-  for (int i=0; i<1; i++) {
+  for (int i=0; i<4; i++) {
     overworldbgm[i] = minim.loadFile("overworldbgm"+i+".mp3");
   }
 
@@ -106,6 +106,13 @@ void setup() {
     battlebackgroundbottom[i] = loadImage("battlebackgroundbottom"+i+".png");
     exit[i] = loadImage("exit"+i+".png");
     newexit[i] = false;
+  }
+
+  exit0left = loadImage("exit0left.png");
+  exit0right = loadImage("exit0right.png");
+
+  for (int i=0; i<3; i++) {
+    entrance[i] = loadImage("entrance"+i+".png");
   }
 
   for (int i=0; i<4; i++) {
@@ -131,21 +138,32 @@ void setup() {
     }
   }
 
-  fightmessage[0][0] = ". . .";
-  fightmessage[0][1] = "Do you want to be on the Wall of Fame?";
-  fightmessage[0][2] = "Enzymes are the answer to everything!";
   teachermonnames[0][0] = "Mr. Moskowitz";
   teachermonnames[0][1] = "Mr. Smolenski";
   teachermonnames[0][2] = "Mrs. Lord";
+  teachermonnames[1][0] = "Mrs. Monroy";
+  teachermonnames[1][1] = "Mr. Pantaleo";
+  teachermonnames[1][2] = "Mrs. Kipp";
+  
+  fightmessage[0][0] = ". . .";
+  fightmessage[0][1] = "Do you want to be on the Wall of Fame?";
+  fightmessage[0][2] = "Enzymes are the answer to everything!";
+  fightmessage[1][0] = "Let me teach you about the education system.";
+  fightmessage[1][1] = "I was in the Navy once!";
+  fightmessage[1][2] = "I'm a rules girl!";
+  
+  
   defeatmessage[0][0] = ". . .!";
   defeatmessage[0][1] = "Just like Rome, I fall!";
   defeatmessage[0][2] = "Next time, I will use college level matching!";
+  defeatmessage[1][0] = "Where did you get those moves, college?";
+  defeatmessage[1][1] = "This is not physics!";
+  defeatmessage[1][2] = "You win a case of satisfaction!";
 
-  for (int i=0; i<4; i++) {
-    for (int j=0; j<3; j++) {
-      pokemon[i][j] = new Enemy();
-    }
-  }
+  //OVERWORLD 1 SPECIAL PARTS
+  grasscavebottom = loadImage("walltop0.png");
+  grasscavebottomright = loadImage("grasscavecornerbottomright.png");
+
   pokemonsetup();
 }
 

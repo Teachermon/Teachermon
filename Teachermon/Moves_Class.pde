@@ -39,7 +39,9 @@ class Moves {
 }
 
 void movesetup() {
-  for (int i=0; i<move.length; i++) {
+  move[0] = new Moves(0, "Naptime", 0, -1, 0, 0, 0, 0, true);
+  move[0].effect = "Student's defense fell!";
+  for (int i=1; i<move.length; i++) {
     move[i]=new Moves(250*i, "move"+i, 0, 0, 0, 0, 0, 0, false);
   }
   move[0].healthchange=true;

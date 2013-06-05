@@ -18,6 +18,12 @@ PImage[] battlebackgroundtop = new PImage[4];
 PImage[] battlebackgroundbottom = new PImage[4];
 PImage[] entrance = new PImage[3];
 PImage[] exit = new PImage[4];
+PImage exit0left;
+PImage exit0right;
+
+//FOR OVERWORLD 1
+PImage grasscavebottom;
+PImage grasscavebottomright;
 
 int overworldopacity = 255;
 
@@ -64,7 +70,18 @@ void overworld(int a) {
   fill(255);
 
   if (a==0 && pokemon[a][0].defeated==true && pokemon[a][1].defeated==true && pokemon[a][2].defeated==true) {
-    image(exit[a], width-25, height/2, 25, 25);
+    image(exit[a], width-75, height-25, 25, 25);
+    image(exit0left, width-100, height-25, 25, 25);
+    image(exit0right, width-50, height-25, 25, 25);
+  }
+  
+  if(a==1){
+    image(grasscavebottom,0,0,25,25);
+    image(entrance[0],25,0,25,25);
+    image(grasscavebottomright,50,0,25,25);
+    if(pokemon[a][0].defeated==true && pokemon[a][1].defeated==true && pokemon[a][2].defeated==true){
+      image(ground[a], width-75, height-25, 25, 25);
+    }
   }
 
   student.display();
@@ -78,26 +95,36 @@ void overworld(int a) {
 
   fill(0, overworldopacity);
   rect(0, 0, width, height);
-  if (student.x>width-25 || student.x<25) {
-    overworldopacity+=15;
+  if ((student.y>=351 && student.moved) || (student.y<=24 && student.moveu)) {
+    overworldopacity+=17;
     if (overworldopacity==255) {
       bgm[a]=false;
       overworldbgm[a].close();
-      overworldbgm[a] = minim.loadFile("overworldbgm"+a+".png");
+      overworldbgm[a] = minim.loadFile("overworldbgm"+a+".mp3");
       overworld[a]=false;
-      if (student.x>width-25) {
+      if (student.y>351) {
         overworld[a+1]=true;
+        student.x=25;
+        student.y=0;
+        student.moved=true;
+        student.moving=true;
+        student.movetimer=0;
       }
-      if (student.x<25) {
+      if (student.y<25 && a>=1) {
         overworld[a-1]=true;
+        student.x=width-75;
+        student.y=height-25;
+        student.moveu=true;
+        student.moving=true;
+        student.movetimer=0;
       }
     }
-    if (student.x==width-24 || student.x==24) {
+    if (student.y==352 || student.y==23) {
       exitsound.trigger();
     }
   }
   else if (overworldopacity>0) {
-    overworldopacity-=5;
+    overworldopacity-=17;
   }
 }
 

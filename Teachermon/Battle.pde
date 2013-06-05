@@ -29,9 +29,11 @@ int kippkash;
 int defeatprogression=0;
 int entertimer=0;
 int opacity=0;
+String studenthealth;
 
 void battle(int i, int j) {
   statmodifiers(i, j);
+  studenthealth = ""+round(student.health)+"/"+round(student.totalhealth)+"";
 
   fill(0);
   rect(0, 0, rectx, height);
@@ -77,6 +79,9 @@ void battle(int i, int j) {
     fill(0);
     textSize(20);
     text(teachermonnames[i][j], 25-healthx, 25, enemyhealth.width, enemyhealth.height);
+    textAlign(RIGHT);
+    text(studenthealth, width-playerhealth.width+healthx, 3*height/4-playerhealth.height+40+healthy, playerhealth.width-25, playerhealth.height-40);
+    textAlign(LEFT);
 
     fill(255);
     textSize(30);
@@ -176,11 +181,12 @@ void battle(int i, int j) {
     if (student.usemove) {
       entertimer++;
       textSize(35);
-      if (keyPressed && button && (key == ENTER || key == RETURN) && move[studentmoveref[movechosen]].power==0 && entertimer>20) {
+      if (keyPressed && button && (key == ENTER || key == RETURN) && move[studentmoveref[movechosen]].power==0 && entertimer>20 && attackphase==true) {
         attackphase=false;
         entertimer=0;
         if (move[studentmoveref[movechosen]].statchange==true) {
           statphase=true;
+          changingstats=true;
         } else {
           healthphase=true;
         }
@@ -318,7 +324,7 @@ void battle(int i, int j) {
         entertimer++;
         text(move[studentmoveref[movechosen]].effect2, width/16, 13*height/16, 15*width/16, 3*height/16);
         if (student.losinghealth==false && healingfinished==false) {
-          student.healthchange=student.totalhealth/2;
+          student.healthchange=round(student.totalhealth/2);
           student.losinghealth=true;
           if (student.health!=student.totalhealth) {
             heal.trigger();
@@ -365,11 +371,12 @@ void battle(int i, int j) {
       if (randommove==4) {
         randommove=floor(random(0, 3.999999));
       }
-      if (keyPressed && button && (key == ENTER || key == RETURN) && move[pokemonmoveref[i][j][randommove]].power==0 && entertimer>20) {
+      if (keyPressed && button && (key == ENTER || key == RETURN) && move[pokemonmoveref[i][j][randommove]].power==0 && entertimer>20 && attackphase==true) {
         attackphase=false;
         entertimer=0;
         if (move[pokemonmoveref[i][j][randommove]].statchange==true) {
           statphase=true;
+          changingstats=true;
         } else {
           healthphase=true;
         }
@@ -423,13 +430,10 @@ void battle(int i, int j) {
         if (student.losinghealth==true && student.losthealth<student.healthchange) {
           student.health-=.33;
           student.losthealth+=.33;
-          if (student.health<=0) {
+          if (student.health<=.33) {
             entertimer=0;
             student.defeated=true;
             pokemon[i][j].usemove=false;
-            battle.close();
-            battle = minim.loadFile("battlemusic.mp3");
-            victory.play();
           }
         }
         if (student.losinghealth==true && student.losthealth>=student.healthchange && keyPressed && (key == ENTER || key == RETURN) && button) {
@@ -509,7 +513,7 @@ void battle(int i, int j) {
         entertimer++;
         text(move[pokemonmoveref[i][j][randommove]].effect2, width/16, 13*height/16, 15*width/16, 3*height/16);
         if (pokemon[i][j].losinghealth==false && healingfinished==false) {
-          pokemon[i][j].healthchange=pokemon[i][j].totalhealth/2;
+          pokemon[i][j].healthchange=round(pokemon[i][j].totalhealth/2);
           pokemon[i][j].losinghealth=true;
           if (pokemon[i][j].health!=pokemon[i][j].totalhealth) {
             heal.trigger();
@@ -675,16 +679,17 @@ void battle(int i, int j) {
         opacity=0;
         trainer[i][j].fighting=false;
         trainer[i][j].battlestart=false;
-        overworld[i]=true;
+        overworld[i]=false;
+        overworld[0]=true;
         trainer[i][j].spotted=false;
-        victory.close();
-        victory = minim.loadFile("victory.mp3");
+        battle.close();
+        battle = minim.loadFile("battlemusic.mp3");
         student.health=student.totalhealth;
         student.attackmod=0;
         student.defensemod=0;
         student.speedmod=0;
         overworldopacity=255;
-        
+
         student.x=25;
         student.y=height/2;
         overworld[0]=true;
@@ -718,7 +723,7 @@ void statmodifiers(int i, int j) {
   if (student.attackmod==0) {
     student.attack=student.baseattack;
   }
-  if (student.attackmod<0) {
+  if (student.defensemod<0) {
     student.defense=student.basedefense*2/(student.defensemod*-1+2);
   }
   if (student.defensemod>0) {
@@ -746,7 +751,7 @@ void statmodifiers(int i, int j) {
   if (pokemon[i][j].attackmod==0) {
     pokemon[i][j].attack=pokemon[i][j].baseattack;
   }
-  if (pokemon[i][j].attackmod<0) {
+  if (pokemon[i][j].defensemod<0) {
     pokemon[i][j].defense=pokemon[i][j].basedefense*2/(pokemon[i][j].defensemod*-1+2);
   }
   if (pokemon[i][j].defensemod>0) {

@@ -13,7 +13,7 @@ class Enemy {
   int basespeed;
   int speed;
   int speedmod;
-  
+
   float movecounter;
   boolean usemove=false;
   boolean losinghealth=false;
@@ -24,6 +24,13 @@ class Enemy {
 }
 
 void pokemonsetup() {
+
+  for (int i=0; i<4; i++) {
+    for (int j=0; j<3; j++) {
+      pokemon[i][j] = new Enemy();
+    }
+  }
+  
   for (int i=0; i<4; i++) {
     for (int j=0; j<3; j++) {
       pokemon[i][j].totalhealth=100;
