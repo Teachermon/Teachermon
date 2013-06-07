@@ -45,7 +45,7 @@ void titlescreen() {
       titlescreenplayer.close();
       clickhere=false;
       titlescreen=false;
-      overworld[0]=true;
+      overworld[2]=true;
     }
   }
 }

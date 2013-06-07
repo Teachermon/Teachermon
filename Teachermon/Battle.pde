@@ -117,7 +117,8 @@ void battle(int i, int j) {
         image(battlearrow, battlearrowx, battlearrowy);
         if (move[studentmoveref[movechosen]].power==0) {
           text("POW: --", 3*width/4 + 5, 3*height/4 + 3*moveprompt.height/8-10, width/4-25, moveprompt.height/4);
-        } else {
+        } 
+        else {
           text("POW: " + move[studentmoveref[movechosen]].power, 3*width/4 + 5, 3*height/4 + 3*moveprompt.height/8-10, width/4-25, moveprompt.height/4);
         }
 
@@ -125,7 +126,8 @@ void battle(int i, int j) {
           battlearrowx=35;
           if (battlearrowpositiony) {
             movechosen=0;
-          } else {
+          } 
+          else {
             movechosen=1;
           }
         }
@@ -139,14 +141,16 @@ void battle(int i, int j) {
           battlearrowx=3*width/8+5;
           if (battlearrowpositiony) {
             movechosen=2;
-          } else {
+          } 
+          else {
             movechosen=3;
           }
         }
         if (keyPressed && (key == 'w' || key == 's') && movechoice) {
           if (battlearrowpositiony) {
             battlearrowpositiony=false;
-          } else {
+          } 
+          else {
             battlearrowpositiony=true;
           }
           blip.trigger();
@@ -154,7 +158,8 @@ void battle(int i, int j) {
         if (keyPressed && (key == 'a' || key == 'd') && movechoice) {
           if (battlearrowpositionx) {
             battlearrowpositionx=false;
-          } else {
+          } 
+          else {
             battlearrowpositionx=true;
           }
           blip.trigger();
@@ -167,7 +172,8 @@ void battle(int i, int j) {
           battlearrowpositiony=true;
           if (student.speed>=pokemon[i][j].speed) {
             student.usemove=true;
-          } else {
+          } 
+          else {
             pokemon[i][j].usemove=true;
           }
         }
@@ -180,19 +186,20 @@ void battle(int i, int j) {
 
     if (student.usemove) {
       entertimer++;
-      textSize(35);
+      textSize(30);
       if (keyPressed && button && (key == ENTER || key == RETURN) && move[studentmoveref[movechosen]].power==0 && entertimer>20 && attackphase==true) {
         attackphase=false;
         entertimer=0;
         if (move[studentmoveref[movechosen]].statchange==true) {
           statphase=true;
           changingstats=true;
-        } else {
+        } 
+        else {
           healthphase=true;
         }
       }
       if (attackphase==true) {
-        text("Student used " + move[studentmoveref[movechosen]].name, width/16, 13*height/16, 15*width/16, 3*height/16);
+        text("Student used " + move[studentmoveref[movechosen]].name + "!", width/16, 13*height/16, 15*width/16, 3*height/16);
         if (doneflashing==false && move[studentmoveref[movechosen]].power>0) {
           if (donemoving==false) {
             hurtmovetimer++;
@@ -224,7 +231,8 @@ void battle(int i, int j) {
           }
           if ((10>flashtimer && flashtimer>5) || (20>flashtimer && flashtimer>15) || (30>flashtimer && flashtimer>25)) {
             enemyhurt=true;
-          } else {
+          } 
+          else {
             enemyhurt=false;
           }
           if (flashtimer==30) {
@@ -238,8 +246,8 @@ void battle(int i, int j) {
           pokemon[i][j].losinghealth=true;
         }
         if (pokemon[i][j].losinghealth==true && pokemon[i][j].losthealth<pokemon[i][j].healthchange) {
-          pokemon[i][j].health-=.33;
-          pokemon[i][j].losthealth+=.33;
+          pokemon[i][j].health-=.5;
+          pokemon[i][j].losthealth+=.5;
           if (pokemon[i][j].health<=0) {
             pokemon[i][j].defeated=true;
             entertimer=0;
@@ -284,7 +292,7 @@ void battle(int i, int j) {
 
       if (statphase==true) {
         entertimer++;
-        text(move[studentmoveref[movechosen]].effect, width/16, 13*height/16, 15*width/16, 3*height/16);
+        text(move[studentmoveref[movechosen]].effect, width/16, 13*height/16, 14*width/16, 2*height/16);
         if (changingstats==true) {
           changingstats=false;
           student.attackmod+=move[studentmoveref[movechosen]].selfatkchange;
@@ -324,15 +332,15 @@ void battle(int i, int j) {
         entertimer++;
         text(move[studentmoveref[movechosen]].effect2, width/16, 13*height/16, 15*width/16, 3*height/16);
         if (student.losinghealth==false && healingfinished==false) {
-          student.healthchange=round(student.totalhealth/2);
+          student.healthchange=round(move[studentmoveref[movechosen]].healthregen*student.totalhealth/100);
           student.losinghealth=true;
           if (student.health!=student.totalhealth) {
             heal.trigger();
           }
         }
         if (student.losinghealth==true && student.losthealth<student.healthchange && student.health!=student.totalhealth) {
-          student.health+=.33;
-          student.losthealth+=.33;
+          student.health+=.5;
+          student.losthealth+=.5;
         }
         if (student.losthealth>=student.healthchange || student.health>=student.totalhealth) {
           student.losinghealth=false;
@@ -366,9 +374,9 @@ void battle(int i, int j) {
 
 
     if (pokemon[i][j].usemove) {
-      textSize(35);  
+      textSize(30);  
       entertimer++;
-      if (randommove==4) {
+      if (randommove==4 && attackphase==true) {
         randommove=floor(random(0, 3.999999));
       }
       if (keyPressed && button && (key == ENTER || key == RETURN) && move[pokemonmoveref[i][j][randommove]].power==0 && entertimer>20 && attackphase==true) {
@@ -377,7 +385,8 @@ void battle(int i, int j) {
         if (move[pokemonmoveref[i][j][randommove]].statchange==true) {
           statphase=true;
           changingstats=true;
-        } else {
+        } 
+        else {
           healthphase=true;
         }
       }
@@ -414,7 +423,8 @@ void battle(int i, int j) {
           }
           if ((10>flashtimer && flashtimer>5) || (20>flashtimer && flashtimer>15) || (30>flashtimer && flashtimer>25)) {
             studenthurt=true;
-          } else {
+          } 
+          else {
             studenthurt=false;
           }
           if (flashtimer==30) {
@@ -428,15 +438,24 @@ void battle(int i, int j) {
           student.losinghealth=true;
         }
         if (student.losinghealth==true && student.losthealth<student.healthchange) {
-          student.health-=.33;
-          student.losthealth+=.33;
-          if (student.health<=.33) {
+          student.health-=.5;
+          student.losthealth+=.5;
+          if (student.health==0) {
+            turn=0;
             entertimer=0;
+            randommove=4;
+            student.losthealth=0;
             student.defeated=true;
+            student.healthchange=0;
             pokemon[i][j].usemove=false;
+            student.whatmove=false;
+            student.usemove=false;
+            attackphase=true;
+            statphase=false;
+            healthphase=false;
           }
         }
-        if (student.losinghealth==true && student.losthealth>=student.healthchange && keyPressed && (key == ENTER || key == RETURN) && button) {
+        if (student.losinghealth==true && student.losthealth>=student.healthchange && keyPressed && (key == ENTER || key == RETURN) && button && entertimer>20) {
           blip.trigger();
           entertimer=0;
           student.losinghealth=false;
@@ -472,7 +491,7 @@ void battle(int i, int j) {
 
       if (statphase==true) {
         entertimer++;
-        text(move[pokemonmoveref[i][j][randommove]].effect, width/16, 13*height/16, 15*width/16, 3*height/16);
+        text(move[pokemonmoveref[i][j][randommove]].effect, width/16, 13*height/16, 14*width/16, 2*height/16);
         if (changingstats==true) {
           changingstats=false;
           pokemon[i][j].attackmod+=move[pokemonmoveref[i][j][randommove]].selfatkchange;
@@ -513,26 +532,28 @@ void battle(int i, int j) {
         entertimer++;
         text(move[pokemonmoveref[i][j][randommove]].effect2, width/16, 13*height/16, 15*width/16, 3*height/16);
         if (pokemon[i][j].losinghealth==false && healingfinished==false) {
-          pokemon[i][j].healthchange=round(pokemon[i][j].totalhealth/2);
+          pokemon[i][j].healthchange=round(pokemon[i][j].totalhealth*move[pokemonmoveref[i][j][randommove]].healthregen/100);
           pokemon[i][j].losinghealth=true;
           if (pokemon[i][j].health!=pokemon[i][j].totalhealth) {
             heal.trigger();
           }
         }
-        if (pokemon[i][j].losinghealth==true && pokemon[i][j].losthealth<pokemon[i][j].healthchange && pokemon[i][j].health!=pokemon[i][j].totalhealth) {
-          pokemon[i][j].health++;
-          pokemon[i][j].losthealth++;
+        if (pokemon[i][j].losinghealth==true && pokemon[i][j].losthealth<pokemon[i][j].healthchange && pokemon[i][j].health<pokemon[i][j].totalhealth) {
+          pokemon[i][j].health+=.5;
+          pokemon[i][j].losthealth+=.5;
         }
-        if (pokemon[i][j].losthealth==pokemon[i][j].healthchange || pokemon[i][j].health==pokemon[i][j].totalhealth) {
+        if (pokemon[i][j].losthealth>=pokemon[i][j].healthchange || pokemon[i][j].health>=pokemon[i][j].totalhealth) {
           pokemon[i][j].losinghealth=false;
           pokemon[i][j].losthealth=0;
           pokemon[i][j].healthchange=0;
           healingfinished=true;
         }
         if (keyPressed && button && (key == ENTER || key == RETURN) && pokemon[i][j].losinghealth==false && healingfinished==true) {
+          randommove=4;
           entertimer=0;
           blip.trigger();
           turn++;
+          healingfinished=false;
           if (turn==1) {
             healthphase=false;
             attackphase=true;
@@ -638,7 +659,7 @@ void battle(int i, int j) {
     }
     if (defeatprogression==1) {
       entertimer++;
-      text("Student blacked out!", width/16, 13*height/16, 15*width/16, 3*height/16);
+      text("Student was disowned by his parents!", width/16, 13*height/16, 15*width/16, 3*height/16);
       if (keyPressed && button && (key == ENTER || key == RETURN) && entertimer>15) {
         entertimer=0;
         blip.trigger();
@@ -646,6 +667,7 @@ void battle(int i, int j) {
       }
     }
     if (defeatprogression==2) {
+      text("Student blacked out!", width/16, 13*height/16, 15*width/16, 3*height/16);
       fill(0, opacity);
       if (opacity<255) {
         opacity+=5;
@@ -679,8 +701,6 @@ void battle(int i, int j) {
         opacity=0;
         trainer[i][j].fighting=false;
         trainer[i][j].battlestart=false;
-        overworld[i]=false;
-        overworld[0]=true;
         trainer[i][j].spotted=false;
         battle.close();
         battle = minim.loadFile("battlemusic.mp3");
@@ -689,10 +709,21 @@ void battle(int i, int j) {
         student.defensemod=0;
         student.speedmod=0;
         overworldopacity=255;
+        student.losinghealth=false;
 
-        student.x=25;
-        student.y=height/2;
-        overworld[0]=true;
+        if (i==0) {
+          student.x=25;
+          student.y=height/2;
+        }
+        else {
+          student.x=25;
+          student.y=0;
+          student.moved=true;
+          student.moving=true;
+          student.movetimer=0;
+        }
+
+        overworld[i]=true;
         student.defeated=false;
         pokemon[i][j].health=pokemon[i][j].totalhealth;
         pokemon[i][j].attackmod=0;
@@ -706,9 +737,11 @@ void battle(int i, int j) {
 void healthbarfill(float i, int j) {
   if (100*i/j>50) {
     fill(0, 255, 0);
-  } else if (100*i/j>25) {
+  } 
+  else if (100*i/j>25) {
     fill(240, 240, 0);
-  } else {
+  } 
+  else {
     fill(255, 40, 0);
   }
 }

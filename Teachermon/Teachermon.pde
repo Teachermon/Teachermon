@@ -163,6 +163,10 @@ void setup() {
   //OVERWORLD 1 SPECIAL PARTS
   grasscavebottom = loadImage("walltop0.png");
   grasscavebottomright = loadImage("grasscavecornerbottomright.png");
+  
+  //OVERWORLD 2 SPECIAL PARTS
+  sandbottomleft = loadImage("sandbottomleft.png");
+  sandbottomright = loadImage("sandbottomright.png");
 
   pokemonsetup();
 }

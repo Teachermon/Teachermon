@@ -25,6 +25,10 @@ PImage exit0right;
 PImage grasscavebottom;
 PImage grasscavebottomright;
 
+//FOR OVERWORLD 2
+PImage sandbottomleft;
+PImage sandbottomright;
+
 int overworldopacity = 255;
 
 String[][] fightmessage = new String[4][3];
@@ -74,17 +78,25 @@ void overworld(int a) {
     image(exit0left, width-100, height-25, 25, 25);
     image(exit0right, width-50, height-25, 25, 25);
   }
-  
-  if(a==1){
-    image(grasscavebottom,0,0,25,25);
-    image(entrance[0],25,0,25,25);
-    image(grasscavebottomright,50,0,25,25);
-    if(pokemon[a][0].defeated==true && pokemon[a][1].defeated==true && pokemon[a][2].defeated==true){
+
+  if (a==1) {
+    image(grasscavebottom, 0, 0, 25, 25);
+    image(entrance[0], 25, 0, 25, 25);
+    image(grasscavebottomright, 50, 0, 25, 25);
+    if (pokemon[a][0].defeated==true && pokemon[a][1].defeated==true && pokemon[a][2].defeated==true) {
       image(ground[a], width-75, height-25, 25, 25);
     }
   }
 
+  if (a==2) {
+    image(entrance[1], 25, 0, 25, 25);
+    image(sandbottomleft, 0, height-25, 25, 25);
+    image(sandbottomright, width-25, height-25, 25, 25);
+  }
+
   student.display();
+  student.stats(a);
+
   if (trainer[a][0].spotted == false && trainer[a][1].spotted == false && trainer[a][2].spotted == false) {
     student.move(a);
   }

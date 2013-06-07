@@ -43,18 +43,18 @@ class Player {
 
   //In-battle values
   int level=20;
-  int totalhealth=100;
-  float health=100;
+  int totalhealth=80;
+  float health=80;
   int healthchange;
   float losthealth;
-  int baseattack=50;
+  int baseattack=93;
   int attack;
   int attackmod=1;
-  int basedefense=200;
+  int basedefense=67;
   int defense;
   int defensemod=0;
   int basespeed=100;
-  int speed=100;
+  int speed=84;
   int speedmod=0;
   
   float movecounter;
@@ -274,6 +274,23 @@ class Player {
           foot=1;
         }
       }
+    }
+  }
+  
+  void stats(int a){
+    if(a==0){
+      totalhealth=80;
+      health=80;
+      baseattack=93;
+      basedefense=67;
+      basespeed=84;
+    }
+    if(a==1){
+      totalhealth=110;
+      health=110;
+      baseattack=123;
+      basedefense=97;
+      basespeed=114;
     }
   }
 }
