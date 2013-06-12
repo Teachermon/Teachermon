@@ -1,0 +1,3 @@
+Teachermon
+==========
+The game that we are creating is a parody of the popular video game Pokémon.  It will be similar in many respects to that game except in the fact that instead of battling different Pokémon against each other, the protagonist/player of the game will be a student in Magnet High School who faces off against teachers he or she would face during the four years of attendance at Magnet.  The target audience of this game is to be students that attend Magnet.  Roles for this project are divided up as follows: Justin Sitler as the Graphic Designer, Brandon Ho as the Code Monkey, Andrew Jordon as the Quality Assurance Tester and Austin Mathew as the User Interface Designer and Project Manager.
