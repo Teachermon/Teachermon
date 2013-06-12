@@ -81,6 +81,7 @@ class Player {
     fill(255);
 
     //***********SPRITES**************
+    //Determines what foot to show is forward
     if (movel && foot==1) {
       image(movel1, x, y, 25, 25);
     }
@@ -125,6 +126,7 @@ class Player {
   void move(int a) {
 
     //***********MOVING****************
+    //Cannot move into walls or trainers
     if (keyPressed && key=='d' && moving==false) {
       mover=true;
       moving=true;
@@ -278,20 +280,12 @@ class Player {
   }
   
   void stats(int a){
-    if(a==0){
-      totalhealth=80;
-      health=80;
-      baseattack=93;
-      basedefense=67;
-      basespeed=84;
-    }
-    if(a==1){
-      totalhealth=110;
-      health=110;
-      baseattack=123;
-      basedefense=97;
-      basespeed=114;
-    }
+    //Determine stats based on what level you are in
+    totalhealth=80+30*a;
+    health=totalhealth;
+    baseattack=93+30*a;
+    basedefense=67+30*a;
+    basespeed=84+30*a;
   }
 }
 

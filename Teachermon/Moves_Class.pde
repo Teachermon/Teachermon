@@ -47,6 +47,8 @@ class Moves {
 }
 
 void movesetup() {
+  //Declaring moves for trainer and teacher. Everybody has 4 moves
+  
   move[0] = new Moves(0, "Naptime", 0, -1, 0, 0, 0, 0, 75);
   move[0].effect = "Student's defense fell!";
   move[1] = new Moves(0, "Study", 2, 0, 0, 0, 0, 0, 0);
@@ -102,13 +104,55 @@ void movesetup() {
   move[26].effect = "Mrs. Kipp's attack fell!";
   move[27] = new Moves(85, "AutoCAD Video", 0, 0, 0, 0, 0, 0, 0);
   
-
-  for (int i=28; i<move.length; i++) {
-    move[i]=new Moves(250*i, "move"+i, 0, 0, 0, 0, 0, 0, 0);
-  }
+  move[28] = new Moves(105, "Pop Quiz", 0, 0, 0, 0, 0, 0, 0);
+  move[29] = new Moves(130, "Impossible Test", 0, -1, 0, 0, 0, 0, 0);
+  move[29].effect = "Mr. Sanservino's defense fell!";
+  move[30] = new Moves(60, "Timeline", 0, 0, 0, 0, 0, -1, 0);
+  move[30].effect = "Student's speed fell!";
+  move[31] = new Moves(0, "Current Events", 0, 0, 0, 0, 0, 0, 25);
+  
+  move[32] = new Moves(0, "Curve", -1, 0, 0, 0, 0, 0, 50);
+  move[32].effect = "Mr. Liu's attack fell!";
+  move[33] = new Moves(55, "Anecdote", 1, 0, 0, 0, 0, 0, 0);
+  move[33].effect = "Mr. Liu's attack rose!";
+  move[34] = new Moves(85, "Discovery Quiz", 0, 0, 0, 0, 0, 0, 0);
+  move[35] = new Moves(100, "Derivatives Test", 0, -1, 0, 0, 0, 0, 0);
+  move[35].effect = "Mr. Liu's defense fell!";
+  
+  move[36] = new Moves(85, "Titration", 0, 0, 0, 0, 0, 0, 0);
+  move[37] = new Moves(130, "Reactions Test", -1, 0, 0, 0, 0, 0, 0);
+  move[37].effect = "Dr. B's attack fell!";
+  move[38] = new Moves(65, "Marker Throw", 0, 0, 1, 0, 0, 0, 0);
+  move[38].effect = "Dr. B's speed rose!";
+  move[39] = new Moves(0, "Powerpoint", 0, 0, 0, 0, -1, -1, 0);
+  move[39].effect = "Student's defense and speed fell!";
+  
+  move[40] = new Moves(60, "Spanish Video", 0, 0, 0, 0, 1, 0, 0);
+  move[40].effect = "Student's defense rose!";
+  move[41] = new Moves(45, "Vocabulary", 0, 0, 0, 0, 0, 0, 0);
+  move[42] = new Moves(100, "Subjunctive Test", -1, 0, 0, 0, 0, 0, 0);
+  move[42].effect = "Senor Valverde's attack fell!";
+  move[43] = new Moves(80, "Accents Quiz", 0, 0, 0, 0, 0, 0, 0);
+  
+  move[44] = new Moves(65, "Integration By Parts", 0, 0, 0, 0, 0, 0, 0);
+  move[45] = new Moves(30, "Tent Project", 1, 0, 0, 0, 0, 0, 0);
+  move[45].effect = "Dr. J's attack rose!";
+  move[46] = new Moves(95, "Riemann Sums", 0, -1, 0, 0, 0, 0, 0);
+  move[46].effect = "Dr. J's defense fell!";
+  move[47] = new Moves(75, "Shell Method", -1, 1, 0, 0, 0, 0, 0);
+  move[47].effect = "Dr. J's attack fell and defense rose!";
+  
+  move[48] = new Moves(0, "Distractor", 1, 0, 0, 0, 0, 0, 10);
+  move[48].effect = "Dr. Fang's attack rose!";
+  move[49] = new Moves(55, "Lab Report", 0, 0, 0, -1, 0, 0, 0);
+  move[49].effect = "Student's attack fell!";
+  move[50] = new Moves(45, "Quick Quiz", 0, 0, 1, 0, 0, 0, 0);
+  move[50].effect = "Dr. Fang's speed rose!";
+  move[51] = new Moves(80, "Simple Harmonic Motion", 0, 0, 0, 0, 0, 0, 0);
 }
 
 void playermovesetup() {
+  //Students/teachers have a "moveref" # to be used in the battle phase
   for (int i=0; i<4; i++) {
     studentmoveref[i]=i;
   }

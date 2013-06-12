@@ -3,21 +3,21 @@ class overworldtrainer {
   boolean spotted=false;
   boolean fighting=false;
   boolean premoving=false;
-  
+
   int exclamationtimer=0;
-  
+
   boolean moving=false;
   boolean battlestart=false;
-  
+
   int x;
   float y=25;
   int i;
   int j;
   float foot=0;
-  
+
   boolean inbattletalking=false;
-  
-  overworldtrainer(int _i, int _j){
+
+  overworldtrainer(int _i, int _j) {
     i=_i;
     j=_j;
     x=(j+1)*width/4;
@@ -26,6 +26,8 @@ class overworldtrainer {
   void move() {
     noStroke();
     fill(0);
+    
+    //If you are under the trainer, it spots you. It waits for an exclamation mark and then the trainer walks to you
     if (moving==false) {
       image(overworldtrainer[i][j], x, y, 25, 25);
     }
@@ -38,10 +40,15 @@ class overworldtrainer {
         premoving=true;
         exclamationtimer++;
       }
-      if(exclamationtimer==1){
+      if (exclamationtimer==1) {
         overworldbgm[i].close();
         overworldbgm[i] = minim.loadFile("overworldbgm"+i+".mp3");
-        seen.play();
+        if (i==3 && j==2) {
+          seen2.play();
+        }
+        else {
+          seen.play();
+        }
       }
       if (exclamationtimer>=45) {
         premoving=false;
@@ -68,16 +75,22 @@ class overworldtrainer {
         text(fightmessage[i][j], width/16, 13*height/16, 15*width/16, 3*height/16);
       }
       if (y==student.y-25 && keyPressed && button && (key == ENTER || key == RETURN) && exclamationtimer>=45) {
+        //After pressing enter, the overworld phase ends and the battle phase begins
         exclamationtimer=0;
         battlestart=true;
         overworld[i]=false;
-        seen.close();
-        seen = minim.loadFile("rocket.mp3");
+        if (i==3 && j==2) {
+          seen2.close();
+          seen2 = minim.loadFile("galactic.mp3");
+        }
+        else {
+          seen.close();
+          seen = minim.loadFile("rocket.mp3");
+        }
         bgm[i]=false;
       }
     }
   }
 }
 
-  
-  
+

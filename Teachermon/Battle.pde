@@ -37,8 +37,14 @@ void battle(int i, int j) {
 
   fill(0);
   rect(0, 0, rectx, height);
+  //Plays music while creating the battle background
   if (rectx==0) {
-    battle.play();
+    if (i==3 && j==2) {
+      battle2.play();
+    }
+    else {
+      battle.play();
+    }
   }
   if (rectx<width+100) {
     rectx+=9;
@@ -94,7 +100,7 @@ void battle(int i, int j) {
       }
     }
     if (student.whatmove) {
-
+      //Bobbing up and down healthbar/character
       if (healthx==0 && healthy>=2) {
         healthychange=-.1;
       }
@@ -108,6 +114,7 @@ void battle(int i, int j) {
         healthx-=15;
       }
       if (healthx==0) {
+        //Text for chosing a move
         image(moveprompt, 0, 3*height/4, width, height/4);
         fill(0);
         text(move[studentmoveref[0]].name, 55, 3*height/4+20, width/2-30, height/4-25);
@@ -121,7 +128,9 @@ void battle(int i, int j) {
         else {
           text("POW: " + move[studentmoveref[movechosen]].power, 3*width/4 + 5, 3*height/4 + 3*moveprompt.height/8-10, width/4-25, moveprompt.height/4);
         }
-
+        
+        //Pressing buttons changes your movechosen number which and the arow position
+        
         if (battlearrowpositionx) {
           battlearrowx=35;
           if (battlearrowpositiony) {
@@ -201,6 +210,7 @@ void battle(int i, int j) {
       if (attackphase==true) {
         text("Student used " + move[studentmoveref[movechosen]].name + "!", width/16, 13*height/16, 15*width/16, 3*height/16);
         if (doneflashing==false && move[studentmoveref[movechosen]].power>0) {
+          //Flashing and moving back and forth animation
           if (donemoving==false) {
             hurtmovetimer++;
             if (hurtmovetimer<=10) {
@@ -241,6 +251,7 @@ void battle(int i, int j) {
             flashtimer=0;
           }
         }
+        //Calculating how much health should be lost and if one side should lose
         if (move[studentmoveref[movechosen]].power>0 && pokemon[i][j].losinghealth==false && doneflashing==true) {
           pokemon[i][j].healthchange=round((2*student.level+10)*student.attack*move[studentmoveref[movechosen]].power/(250*pokemon[i][j].defense+2)*random(.9, 1));
           pokemon[i][j].losinghealth=true;
@@ -252,8 +263,14 @@ void battle(int i, int j) {
             pokemon[i][j].defeated=true;
             entertimer=0;
             student.usemove=false;
-            battle.close();
-            battle = minim.loadFile("battlemusic.mp3");
+            if (i==3 && j==2) {
+              battle2.close();
+              battle2 = minim.loadFile("champion.mp3");
+            }
+            else {
+              battle.close();
+              battle = minim.loadFile("battlemusic.mp3");
+            }
             victory.play();
           }
         }
@@ -264,6 +281,7 @@ void battle(int i, int j) {
           pokemon[i][j].losthealth=0;
           pokemon[i][j].healthchange=0;
           doneflashing=false;
+          //Only enters "phases" that are applicable to the chosen move
           if (move[studentmoveref[movechosen]].statchange==true) {
             statphase=true;
             attackphase=false;
@@ -291,6 +309,7 @@ void battle(int i, int j) {
       }
 
       if (statphase==true) {
+        //Changes stats for pokemon if needed
         entertimer++;
         text(move[studentmoveref[movechosen]].effect, width/16, 13*height/16, 14*width/16, 2*height/16);
         if (changingstats==true) {
@@ -329,6 +348,7 @@ void battle(int i, int j) {
       }
 
       if (healthphase==true) {
+        //Adds health if needed
         entertimer++;
         text(move[studentmoveref[movechosen]].effect2, width/16, 13*height/16, 15*width/16, 3*height/16);
         if (student.losinghealth==false && healingfinished==false) {
@@ -372,11 +392,12 @@ void battle(int i, int j) {
 
 
 
-
+    //See comments for the student.usemove section
     if (pokemon[i][j].usemove) {
       textSize(30);  
       entertimer++;
       if (randommove==4 && attackphase==true) {
+        //Teacher uses a random move
         randommove=floor(random(0, 3.999999));
       }
       if (keyPressed && button && (key == ENTER || key == RETURN) && move[pokemonmoveref[i][j][randommove]].power==0 && entertimer>20 && attackphase==true) {
@@ -573,7 +594,7 @@ void battle(int i, int j) {
   }
 
 
-
+  //When defeated, all values are reset. 
   if (pokemon[i][j].defeated==true) {
     if (defeatprogression==0) {
       text(teachermonnames[i][j] + " was defeated!", width/16, 13*height/16, 15*width/16, 3*height/16);
@@ -702,8 +723,14 @@ void battle(int i, int j) {
         trainer[i][j].fighting=false;
         trainer[i][j].battlestart=false;
         trainer[i][j].spotted=false;
-        battle.close();
-        battle = minim.loadFile("battlemusic.mp3");
+        if (i==3 && j==2) {
+          battle2.close();
+          battle2 = minim.loadFile("champion.mp3");
+        }
+        else {
+          battle.close();
+          battle = minim.loadFile("battlemusic.mp3");
+        }
         student.health=student.totalhealth;
         student.attackmod=0;
         student.defensemod=0;
@@ -734,6 +761,8 @@ void battle(int i, int j) {
   }
 }
 
+//Determines health bar color based on % health left
+
 void healthbarfill(float i, int j) {
   if (100*i/j>50) {
     fill(0, 255, 0);
@@ -745,6 +774,8 @@ void healthbarfill(float i, int j) {
     fill(255, 40, 0);
   }
 }
+
+//Determining stats based on the stat modification
 
 void statmodifiers(int i, int j) {
   if (student.attackmod<0) {

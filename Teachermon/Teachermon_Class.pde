@@ -2,17 +2,17 @@ class Enemy {
   int level;
   int totalhealth;
   float health;
-  int healthchange;
-  float losthealth;
+  int healthchange; //Used in calculating health loss
+  float losthealth; //Used in calculating health loss
   int baseattack;
   int attack;
   int attackmod; //Value from -6 to 6 to determine final attack
   int basedefense;
   int defense;
-  int defensemod;
+  int defensemod; //Same as attack mod
   int basespeed;
   int speed;
-  int speedmod;
+  int speedmod; // Same as attack mod
 
   float movecounter;
   boolean usemove=false;
@@ -33,7 +33,8 @@ class Enemy {
 }
 
 void pokemonsetup() {
-
+  //Stats of the teachers
+  
   pokemon[0][0] = new Enemy(20, 70, 82, 59, 51);
   pokemon[0][1] = new Enemy(20, 75, 90, 70, 120);
   pokemon[0][2] = new Enemy(20, 110, 95, 78, 80);
@@ -42,24 +43,12 @@ void pokemonsetup() {
   pokemon[1][1] = new Enemy(20, 105, 130, 95, 103);
   pokemon[1][2] = new Enemy(20, 90, 178, 63, 124);
   
-  for (int i=2; i<4; i++) {
-    for (int j=0; j<3; j++) {
-      pokemon[i][j] = new Enemy(0, 0, 0, 0, 0);
-    }
-  }
-
-  for (int i=2; i<4; i++) {
-    for (int j=0; j<3; j++) {
-      pokemon[i][j].totalhealth=100;
-      pokemon[i][j].health=100;
-      pokemon[i][j].baseattack=5;
-      pokemon[i][j].attackmod=0;
-      pokemon[i][j].basespeed=10;
-      pokemon[i][j].speedmod=0;
-      pokemon[i][j].basedefense=50;
-      pokemon[i][j].defensemod=0;
-      pokemon[i][j].level=100;
-    }
-  }
+  pokemon[2][0] = new Enemy(20, 120, 244, 98, 201);
+  pokemon[2][1] = new Enemy(20, 135, 122, 136, 178);
+  pokemon[2][2] = new Enemy(20, 155, 165, 169, 135);
+  
+  pokemon[3][0] = new Enemy(20, 210, 157, 204, 120);
+  pokemon[3][1] = new Enemy(20, 163, 204, 170, 168);
+  pokemon[3][2] = new Enemy(20, 190, 263, 177, 194);
 }
 

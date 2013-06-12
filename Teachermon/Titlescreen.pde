@@ -11,11 +11,12 @@ boolean clickhere;
 float titleopacity=0;
 int waveformcounter=0;
 
+//This is playing the video
+
 void titlescreen() {
   waveformcounter++;
   image(theMov, 0, 0, width, height);
   titlescreenplayer.play();
-  //  Uncomment this to display waveforms of the music playing after 11.2 seconds
   if (waveformcounter>=525) {
     for (int i = 0; i < titlescreenplayer.bufferSize() - 1; i++)
     {
@@ -24,7 +25,6 @@ void titlescreen() {
       line( x1, 50 + titlescreenplayer.left.get(i)*50, x2, 50 + titlescreenplayer.left.get(i+1)*50 );
       line( x1, height-50 + titlescreenplayer.right.get(i)*50, x2, height-50 + titlescreenplayer.right.get(i+1)*50 );
     }
-    //  Use either the mousePressed function or void mousePressed() function, depending on need.
     if (keyPressed && (key == ENTER || key == RETURN)) {
       clickhere=true;
     }
@@ -33,19 +33,13 @@ void titlescreen() {
       rect(0, 0, width, height);
       titleopacity+=5;
     } 
-
-    //void mousePressed(){
-    //  if((mouseY>300)&&(mouseY<500)&&(millis()>=12000)){
-    //    background(255,100);
-    //    clickhere=true;
-    //  }
-    //}
     if (titleopacity>=255&&titlescreenplayer.isPlaying()&&clickhere) {
+      //After the "press enter prompt" comes up and enter is pressed, titlescreen ends and the first level begins
       titleopacity=255;
       titlescreenplayer.close();
       clickhere=false;
       titlescreen=false;
-      overworld[2]=true;
+      overworld[0]=true;
     }
   }
 }
