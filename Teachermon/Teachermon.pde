@@ -61,7 +61,7 @@ int[][][] pokemonmoveref = new int[4][3][4];
 
 //Credits
 
-String s = "Credits\n\n\n\n\n\n\n\n\n\n\n\nTEACHERMON\n\n\n\n\n\n\nProject Manager\nAndrew Jordon\n\n\n\n\n\n\n\n\n\nCode Monkey\nBrandon Ho\n\n\n\n\n\n\n\n\n\nQuality Assurance Tester\nAustin Mathew\n\n\n\n\n\n\n\n\n\nGraphic Designer\nJustin Sitler\n\n\n\n\n\n\n\n\n\nUser Interface Designer\nAustin Mathew\n\n\n\n\n\n\n\n\n\n\n\n\n\nTeachers\n\n\n\n\n\n\n\n\n\n\n\nMr. Moskowitz\n\n\n\n\n\n\n\nMr. Smolenski\n\n\n\n\n\n\n\nMrs. Lord\n\n\n\n\n\n\n\nMrs. Monroy\n\n\n\n\n\n\n\nMr. Pantaleo\n\n\n\n\n\n\n\nMrs. Kipp\n\n\n\n\n\n\n\nMr. Sanservino\n\n\n\n\n\n\n\nMr. Liu\n\n\n\n\n\n\n\nDr. Buchanan\n\n\n\n\n\n\n\nSenor Valverde\n\n\n\n\n\n\n\nDr. Jidarian\n\n\n\n\n\n\n\nDr. Fang";
+String s = "Credits\n\n\n\n\n\n\n\n\n\n\n\nTEACHERMON\n\n\n\n\n\n\nProject Manager\nAndrew Jordan\n\n\n\n\n\n\n\n\n\nCode Monkey\nBrandon Ho\n\n\n\n\n\n\n\n\n\nQuality Assurance Tester\nAustin Mathew\n\n\n\n\n\n\n\n\n\nGraphic Designer\nJustin Sitler\n\n\n\n\n\n\n\n\n\nUser Interface Designer\nAustin Mathew\n\n\n\n\n\n\n\n\n\n\n\n\n\nTeachers\n\n\n\n\n\n\n\n\n\n\n\nMr. Moskowitz\n\n\n\n\n\n\n\nMr. Smolenski\n\n\n\n\n\n\n\nMrs. Lord\n\n\n\n\n\n\n\nMrs. Monroy\n\n\n\n\n\n\n\nMr. Pantaleo\n\n\n\n\n\n\n\nMrs. Kipp\n\n\n\n\n\n\n\nMr. Sanservino\n\n\n\n\n\n\n\nMr. Liu\n\n\n\n\n\n\n\nDr. Buchanan\n\n\n\n\n\n\n\nSenor Valverde\n\n\n\n\n\n\n\nDr. Jidarian\n\n\n\n\n\n\n\nDr. Fang";
 //Teachers credit string
 String x = "Thanks for playing!";
 float i=500;
